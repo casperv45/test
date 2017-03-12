@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>UserAdress</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ userAdress.id }}</td>
+            </tr>
+            <tr>
+                <th>Userid</th>
+                <td>{{ userAdress.userId }}</td>
+            </tr>
+            <tr>
+                <th>Vestigingsid</th>
+                <td>{{ userAdress.vestigingsId }}</td>
+            </tr>
+            <tr>
+                <th>Street</th>
+                <td>{{ userAdress.street }}</td>
+            </tr>
+            <tr>
+                <th>Zip</th>
+                <td>{{ userAdress.zip }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ userAdress.city }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ userAdress.country }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('useradress_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('useradress_edit', { 'id': userAdress.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

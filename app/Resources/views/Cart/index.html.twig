@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+    <h1 style="text-align: center;">Winkelwagen</h1>
+
+    <ul class="thumbnails">
+
+        {% if empty %}
+            <h5>Je winkelwagen is leeg!</h5>
+        {% endif %}
+        {% set cart = app.session.get('cart') %}
+        {% set total = 0 %}
+
+        {% if product %}
+
+
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Quantity</th>
+                            <th>Code</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Actie</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for key, item in cart %}
+                            <tr>
+                                <td>{{ key }}</td>
+                                <td>{{ item }}</td>
+
+                                {% for row in product %}
+                                    {% if row.id == key %}
+                                        <td>{{ row.flowerCode }}</td>
+                                        <td>€{{ row.prijs | number_format(2)  }}</td>
+                                        <td>€{{ (row.prijs * item) | number_format(2) }}</td>
+                                        {% set total = total + (row.prijs * item)  %}
+                                    {% endif %}
+                                {% endfor %}
+
+                                <td><a href="{{ path('cart_remove', {'id': key}) }}"><button class="btn btn-danger">Verwijder</button></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+
+
+        {% endif %}
+    </ul>
+    <div class="row">
+    <div class="col-md-4">
+<table>
+    <H4 class="right">Totaal in Winkelwagen</H4><h4> €{{ total | number_format(2) }}</H4>
+</table>
+        </div>
+        </div>
+        </div>
+    <div class="jumbotron">
+    <a href="{{ path('start') }}"><button type="button" class="btn btn-primary col-lg-2 right">Verder shoppen!</button></a>
+    <a href="{{ path('checkout') }}"><button type="button" class="btn btn-success col-lg-2 pull-right">Bestellen</button></a>
+    </div>
+
+{% endblock %}

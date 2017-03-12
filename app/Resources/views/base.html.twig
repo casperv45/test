@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>{% block title %}Flowerpower{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('bundles/app/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="{{ asset('bundles/app/css/bootstrap-theme.min.css') }}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('bundles/app/css/theme.css') }}" rel="stylesheet">
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css"/>
+
+
+
+
+
+    {% block stylesheets %}{% endblock %}
+    {% set cart = app.session.get('cart') %}
+    {% set total = 0 %}
+    {% set count = 0 %}
+
+       <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body role="document">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-grain"></span> Flowerpower</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a></li>
+                <li><a href="{{ path('vestigingen_index') }}">Vestigingen</a></li>
+                <li><a href="/contact/new">Contact</a></li>
+
+                {% if is_granted("ROLE_ADMIN") %}
+                    <li class="dropdown">
+                        <a href="{{ path('flowers_index') }}" class="dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">Productbeheer <span
+                                    class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <!-- <li class="dropdown-header">Nav header</li>
+                            <li><a href="#">Separated link</a></li-->
+                            <li><a href="{{ path('flowers_index') }}">Producten lijst</a></li>
+
+                            <li><a href="{{ path('flowers_new') }}">Product Toevoegen</a></li>
+                        </ul>
+                <li class="dropdown">
+                    <a href="{{ path('vestigingen_index') }}" class="dropdown-toggle" data-toggle="dropdown"
+                       role="button" aria-haspopup="true" aria-expanded="false">Vestegingsbeheer <span
+                                class="caret"></span></a>
+                    <ul class="dropdown-menu">
+
+                    <li><a href="{{ path('vestigingen_index') }}">Vestigingen</a></li>
+
+                        <li><a href="{{ path('vestigingen_new') }}">Nieuwe vesteging toevoegen</a></li>
+
+                        </ul>
+                    {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"> </span> {{ app.user | capitalize }} <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    {% if app.user %}
+                        <li><a href="/logout"> Logout </a></li>
+                    {% else %}
+                        <li><a href="/login"> Login</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+</ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container theme-showcase" role="main">
+
+    {% block content %}
+        {% block fos_user_content %}{% endblock fos_user_content %}
+    {% endblock content %}
+
+    {% block body %}{% endblock %}
+    {% block javascripts %}
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{{ asset('bundles/app/js/bootstrap.min.js') }}"></script>
+
+        <script src="{{ asset('bundles/app/js/datatables.js') }}"></script>
+    {% endblock %}
+</body>
+</html>

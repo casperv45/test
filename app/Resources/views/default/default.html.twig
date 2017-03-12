@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/"><span class="glyphicon glyphicon-grain"></span> Flowerpower</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Home</a></li>
+                    <li><a href="{{ path('vestigingen_index') }}">Vestigingen</a></li>
+
+                    <li><a href="/contact/new">Contact</a></li>
+
+
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <li class="dropdown">
+                            <a href="{{ path('flowers_index') }}" class="dropdown-toggle" data-toggle="dropdown"
+                               role="button" aria-haspopup="true" aria-expanded="false">Productbeheer <span
+                                        class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <!-- <li class="dropdown-header">Nav header</li>
+                                <li><a href="#">Separated link</a></li-->
+                                <li><a href="{{ path('flowers_index') }}">Producten lijst</a></li>
+
+                                <li><a href="{{ path('flowers_new') }}">Product Toevoegen</a></li>
+                            </ul>
+                        <li class="dropdown">
+
+
+                        <a href="{{ path('flowers_index') }}" class="dropdown-toggle" data-toggle="dropdown"
+                           role="button" aria-haspopup="true" aria-expanded="false">Vestegingsbeheer <span
+                                    class="caret"></span></a>
+                        <ul class="dropdown-menu">
+
+                            <li><a href="{{ path('vestigingen_index') }}">Vestigingen</a></li>
+
+                                <li><a href="{{ path('vestigingen_new') }}">Nieuwe vesteging toevoegen</a></li>
+
+                        </ul>
+                        {% endif %}
+                </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user"> </span> {{ app.user | capitalize }} <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    {% if app.user %}
+                                        <li><a href="/logout"> Logout </a></li>
+                                    {% else %}
+                                        <li><a href="/login"> Login</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{{ path('cart') }}"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart <span class="badge"> {{ count }} item(s)</span> €{{ total | number_format(2) }}</a>
+                            </li>
+
+                        </ul>
+
+
+
+
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <h3 style="text-align:center;">Welkom bij onze flowerpower website </h3>
+    </div>
+    <div class="jumbotron">
+
+    {% set cart = app.session.get('cart') %}
+    {% set total = 0 %}
+    {% set count = 0 %}
+
+    {% if flowers %}
+        {% for key, item in cart %}
+            {% for row in flowers %}
+                {% if row.id == key %}
+                    {% set total = total + (row.prijs * item)  %}
+                    {% set count = count + item %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+
+
+
+    {% for flower in flowers %}
+    <div class="row">
+        <div class="col-sm-6 col-md-4">
+
+            <div class="thumbnail">
+
+        <img src="/uploads/documents/{{ flower.opslagPath }}" alt="afbeelding is niet geladen, Sorry!">
+                <div class="caption">
+                    <h3><b>€{{ flower.prijs }}</b></h3>
+                    <p></p>
+                    <p><a href="{{ path('cart_add', { 'id': flower.id }) }}" class="btn btn-primary" role="button">Toevoegen</a> <a href="{{ path('flowers_show', { 'id': flower.id }) }}" class="btn btn-default" role="button">details</a></p>
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="jumbotron">
+        <h1 style="text-align:center">Contact Formulier</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Vestuur" />
+    {{ form_end(form) }}
+
+</div>
+{% endblock %}

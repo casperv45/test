@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+    <h1 style="text-align:center; ">Producten lijst</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Flowercode</th>
+                <th>Foto</th>
+                <th>Prijs</th>
+                <th>Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for flower in flowers %}
+            <tr>
+                <td><a href="{{ path('flowers_show', { 'id': flower.id }) }}">{{ flower.id }}</a></td>
+                <td>{{ flower.flowerCode }}</td>
+                <td>{{ flower.opslagPath }}</td>
+                <td>{{ flower.prijs }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('flowers_show', { 'id': flower.id }) }}">bekijk</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('flowers_edit', { 'id': flower.id }) }}">bewerk</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+    <div class="jumbotron">
+
+            <button><a href="{{ path('flowers_new') }}">Nieuw product aanmaken</a></button>
+
+        </div>
+{% endblock %}

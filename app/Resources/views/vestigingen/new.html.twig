@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+    <h1 style="text-align:center;">Vestigingen toevoegen</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" value="Toevoegen" />
+    {{ form_end(form) }}
+</div>
+    <div class="jumbotron">
+
+           <button><a href="{{ path('vestigingen_index') }}">Terug naar de vestegingen</a></button>
+
+    </div>
+{% endblock %}

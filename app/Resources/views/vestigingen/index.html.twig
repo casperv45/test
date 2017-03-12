@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+    <h1 style="text-align:center;">Vestigingen</h1>
+
+    <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Vestigingsplaats</th>
+                <th>Email</th>
+                <th>Telefoon</th>
+                <th>Adres</th>
+                <th>Postcode</th>
+
+            </tr>
+        </thead>
+        <tbody>
+        {% for vestigingen in vestigingens %}
+            <tr>
+                <td><a href="{{ path('vestigingen_show', { 'id': vestigingen.id }) }}">{{ vestigingen.id }}</a></td>
+                <td>{{ vestigingen.vestigingsplaats }}</td>
+                <td>{{ vestigingen.email }}</td>
+                <td>{{ vestigingen.telefoon }}</td>
+                <td>{{ vestigingen.adres }}</td>
+                <td>{{ vestigingen.postcode }}</td>
+                <td>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+{% if is_granted("ROLE_ADMIN") %}
+<div class="jumbotron">
+
+            <button><a href="{{ path('vestigingen_new') }}">Nieuwe vesteging toevoegen</a></button>
+
+        </div>
+{% endif %}
+
+
+{% endblock %}

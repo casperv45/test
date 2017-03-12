@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron">
+    <h1>Flower</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ flower.id }}</td>
+            </tr>
+            <tr>
+                <th>Flowercode</th>
+                <td>{{ flower.flowerCode }}</td>
+            </tr>
+            <tr>
+                <th>Opslagpath</th>
+                <td><img src="/uploads/documents/{{ flower.opslagPath }}" alt="afbeelding is niet geladen, Sorry!"></td>
+            </tr>
+            <tr>
+                <th>Prijs</th>
+                <td>{{ flower.prijs }}</td>
+            </tr>
+        </tbody>
+    </table>
+        {% if is_granted("ROLE_ADMIN") %}
+
+    <ul>
+        <li>
+            <a href="{{ path('flowers_index') }}">Terug naar de lijst</a>
+        </li>
+        <li>
+            <a href="{{ path('flowers_edit', { 'id': flower.id }) }}">Wijzig</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Verwijder">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+        {% endif %}
+    </div>
+{% endblock %}
